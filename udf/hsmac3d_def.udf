@@ -1,0 +1,139 @@
+\begin{header}
+\begin{def}
+	EngineType:string;
+	EngineVersion:string;
+	IOType:string;
+	ProjectName:string;
+	Comment:string;
+	Action:string;
+\end{def}
+
+\begin{data}
+	EngineType:"hsmac3d"
+	EngineVersion:"1"
+	IOType:"INOUT"
+	ProjectName:""
+	Comment:"hsmac3d"
+	Action:"hsmac3d.act"
+\end{data}
+\end{header}
+\begin{unit}
+[l]= {$input.unit_parameter.length} [m]
+[eta] = {$input.unit_parameter.solvent_viscosity} [kg/m/s]
+[tau] = {$input.unit_parameter.time} [s]
+\end{unit}
+
+\begin{global_def}
+input:{
+	unit_parameter:{
+		length: double [m] "unit [l]"
+		solvent_viscosity: double [kg/m/s] "unit [eta]"
+		time: double [s] "unit [tau]"
+	}
+	viscosity:double[eta]
+	density:double
+	time_evolution:{
+		simulation_steps:int
+		report_steps:int
+		dt:double[tau]
+	}
+	size:{
+		length:{
+			x:double[l]
+			y:double[l]
+			z:double[l]
+		}
+		lattice:{
+			x:int
+			y:int
+			z:int
+		}
+	}
+	flow:{
+		type:select{"wall","channel","LeesEdwards"}
+		wall:{
+			down:{
+				u:double[l/tau]
+				v:double[l/tau]
+				w:double[l/tau]
+			}
+			right:{
+				u:double[l/tau]
+				v:double[l/tau]
+				w:double[l/tau]
+			}
+			up:{
+				u:double[l/tau]
+				v:double[l/tau]
+				w:double[l/tau]
+			}
+			left:{
+				u:double[l/tau]
+				v:double[l/tau]
+				w:double[l/tau]
+			}
+			front:{
+				u:double[l/tau]
+				v:double[l/tau]
+				w:double[l/tau]
+			}
+			back:{
+				u:double[l/tau]
+				v:double[l/tau]
+				w:double[l/tau]
+			}
+		}
+		channel:{
+			down:{
+				u:double[l/tau]
+				v:double[l/tau]
+				w:double[l/tau]
+			}
+			up:{
+				u:double[l/tau]
+				v:double[l/tau]
+				w:double[l/tau]
+			}
+			front:{
+				u:double[l/tau]
+				v:double[l/tau]
+				w:double[l/tau]
+			}
+			back:{
+				u:double[l/tau]
+				v:double[l/tau]
+				w:double[l/tau]
+			}
+			pressure_difference:double
+		}
+		LeesEdwards:{
+			shear_rate:double[1/tau]
+		}
+		algorithm:{
+			pressure_iteration:int
+			convergence:double
+			relaxation_coefficient:double
+		}
+	}
+	additional_information[]:{
+		item:string
+		value:string
+	}
+}
+\end{global_def}
+\begin{def}
+output:{
+	lattice[][][]:{
+		u:double[l/tau]
+		v:double[l/tau]
+		w:double[l/tau]
+		p:double
+	}
+	cpu_time:double[s]
+ 	additional_information[]:{
+ 		item:string
+ 		value:string
+ 	}
+}
+\end{def}
+

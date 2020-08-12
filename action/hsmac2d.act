@@ -1,0 +1,11 @@
+action output:show() : \begin
+nx=$input.size.lattice.x
+ny=$input.size.lattice.y
+for i in range(1,nx+1):
+	for j in range(1,ny+1):
+		vx=$output.lattice[i][j].u
+		vy=$output.lattice[i][j].v
+		p=$output.lattice[i][j].p
+		line([i,j,0],[i+vx,j+vy,0],1)
+		#sphere([i,j,0],[(p+10)/20,0,0,1,1])
+\end
